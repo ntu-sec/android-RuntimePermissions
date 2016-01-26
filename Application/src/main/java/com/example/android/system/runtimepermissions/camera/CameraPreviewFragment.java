@@ -31,11 +31,11 @@ import android.widget.Toast;
 /**
  * Displays a {@link CameraPreview} of the first {@link Camera}.
  * An error message is displayed if the Camera is not available.
- * <p>
+ * <p/>
  * This Fragment is only used to illustrate that access to the Camera API has been granted (or
  * denied) as part of the runtime permissions model. It is not relevant for the use of the
  * permissions API.
- * <p>
+ * <p/>
  * Implementation is based directly on the documentation at
  * http://developer.android.com/guide/topics/media/camera.html
  */
@@ -48,7 +48,6 @@ public class CameraPreviewFragment extends Fragment {
      */
     private static final int CAMERA_ID = 0;
 
-    private CameraPreview mPreview;
     private Camera mCamera;
 
     public static CameraPreviewFragment newInstance() {
@@ -57,23 +56,21 @@ public class CameraPreviewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         // Open an instance of the first camera and retrieve its info.
         mCamera = getCameraInstance(CAMERA_ID);
         Camera.CameraInfo cameraInfo = null;
 
-        if (mCamera != null) {
-            // Get camera info only if the camera is available
-            cameraInfo = new Camera.CameraInfo();
-            Camera.getCameraInfo(CAMERA_ID, cameraInfo);
-        }
-
-        if (mCamera == null || cameraInfo == null) {
+        if (mCamera == null) {
             // Camera is not available, display error message
             Toast.makeText(getActivity(), "Camera is not available.", Toast.LENGTH_SHORT).show();
             return inflater.inflate(R.layout.fragment_camera_unavailable, null);
         }
+
+        // Get camera info only if the camera is available
+        cameraInfo = new Camera.CameraInfo();
+        Camera.getCameraInfo(CAMERA_ID, cameraInfo);
 
         View root = inflater.inflate(R.layout.fragment_camera, null);
 
@@ -82,7 +79,7 @@ public class CameraPreviewFragment extends Fragment {
                 .getRotation();
 
         // Create the Preview view and set it as the content of this Activity.
-        mPreview = new CameraPreview(getActivity(), mCamera, cameraInfo, displayRotation);
+        CameraPreview mPreview = new CameraPreview(getActivity(), mCamera, cameraInfo, displayRotation);
         FrameLayout preview = (FrameLayout) root.findViewById(R.id.camera_preview);
         preview.addView(mPreview);
 
@@ -96,7 +93,9 @@ public class CameraPreviewFragment extends Fragment {
         releaseCamera();
     }
 
-    /** A safe way to get an instance of the Camera object. */
+    /**
+     * A safe way to get an instance of the Camera object.
+     */
     public static Camera getCameraInstance(int cameraId) {
         Camera c = null;
         try {

@@ -27,6 +27,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -43,7 +44,7 @@ import common.activities.SampleActivityBase;
  * Launcher Activity that demonstrates the use of runtime permissions for Android M.
  * It contains a summary sample description, sample log and a Fragment that calls callbacks on this
  * Activity to illustrate parts of the runtime permissions API.
- * <p>
+ * <p/>
  * This Activity requests permissions to access the camera ({@link android.Manifest.permission#CAMERA})
  * when the 'Show Camera' button is clicked to display the camera preview.
  * Contacts permissions (({@link android.Manifest.permission#READ_CONTACTS} and ({@link
@@ -59,17 +60,17 @@ import common.activities.SampleActivityBase;
  * in
  * a callback to the {@link android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback}
  * interface.
- * <p>
+ * <p/>
  * Before requesting permissions, {@link ActivityCompat#shouldShowRequestPermissionRationale(Activity,
  * String)}
  * should be called to provide the user with additional context for the use of permissions if they
  * have been denied previously.
- * <p>
+ * <p/>
  * If this sample is executed on a device running a platform version below M, all permissions
  * declared
  * in the Android manifest file are always granted at install time and cannot be requested at run
  * time.
- * <p>
+ * <p/>
  * This sample targets the M platform and must therefore request permissions at runtime. Change the
  * targetSdk in the file 'Application/build.gradle' to 22 to run the application in compatibility
  * mode.
@@ -77,7 +78,7 @@ import common.activities.SampleActivityBase;
  * APIs provide compatibility data.
  * For example the camera cannot be opened or an empty list of contacts is returned. No special
  * action is required in this case.
- * <p>
+ * <p/>
  * (This class is based on the MainActivity used in the SimpleFragment sample template.)
  */
 public class MainActivity extends SampleActivityBase
@@ -141,7 +142,7 @@ public class MainActivity extends SampleActivityBase
      */
     private void requestCameraPermission() {
         Log.i(TAG, "CAMERA permission has NOT been granted. Requesting permission.");
-
+        Log.d(TAG, String.format("version %d", Build.VERSION.SDK_INT));
         // BEGIN_INCLUDE(camera_permission_request)
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CAMERA)) {
@@ -262,7 +263,7 @@ public class MainActivity extends SampleActivityBase
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
+                                           @NonNull int[] grantResults) {
 
         if (requestCode == REQUEST_CAMERA) {
             // BEGIN_INCLUDE(permission_result)
@@ -341,7 +342,9 @@ public class MainActivity extends SampleActivityBase
         return super.onOptionsItemSelected(item);
     }
 
-    /** Create a chain of targets that will receive log data */
+    /**
+     * Create a chain of targets that will receive log data
+     */
     @Override
     public void initializeLogging() {
         // Wraps Android's native log framework.

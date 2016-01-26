@@ -41,22 +41,24 @@ import java.util.ArrayList;
 
 /**
  * Displays the first contact stored on the device and contains an option to add a dummy contact.
- * <p>
+ * <p/>
  * This Fragment is only used to illustrate that access to the Contacts ContentProvider API has
  * been granted (or denied) as part of the runtime permissions model. It is not relevant for the
  * use
  * of the permissions API.
- * <p>
+ * <p/>
  * This fragments demonstrates a basic use case for accessing the Contacts Provider. The
  * implementation is based on the training guide available here:
  * https://developer.android.com/training/contacts-provider/retrieve-names.html
  */
 public class ContactsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    static int counter = 0;
+
     private static final String TAG = "Contacts";
     private TextView mMessageText = null;
 
-    private static String DUMMY_CONTACT_NAME = "__DUMMY CONTACT from runtime permissions sample";
+    private static String DUMMY_CONTACT_NAME = "__DUMMY__";
 
     /**
      * Projection for the content provider query includes the id and primary name of a contact.
@@ -80,7 +82,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
 
         mMessageText = (TextView) rootView.findViewById(R.id.contact_message);
@@ -109,7 +111,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
      * Restart the Loader to query the Contacts content provider to display the first contact.
      */
     private void loadContact() {
-        getLoaderManager().restartLoader(0, null, this);
+        getLoaderManager().restartLoader(24, null, this);
     }
 
     /**
@@ -153,12 +155,12 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
 
     /**
      * Accesses the Contacts content provider directly to insert a new contact.
-     * <p>
+     * <p/>
      * The contact is called "__DUMMY ENTRY" and only contains a name.
      */
     private void insertDummyContact() {
         // Two operations are needed to insert a new contact.
-        ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>(2);
+        ArrayList<ContentProviderOperation> operations = new ArrayList<>(2);
 
         // First, set up a new raw contact.
         ContentProviderOperation.Builder op =
@@ -173,16 +175,14 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
                 .withValue(ContactsContract.Data.MIMETYPE,
                         ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME,
-                        DUMMY_CONTACT_NAME);
+                        DUMMY_CONTACT_NAME + String.valueOf(counter));
         operations.add(op.build());
 
         // Apply the operations.
         ContentResolver resolver = getActivity().getContentResolver();
         try {
             resolver.applyBatch(ContactsContract.AUTHORITY, operations);
-        } catch (RemoteException e) {
-            Log.d(TAG, "Could not add a new contact: " + e.getMessage());
-        } catch (OperationApplicationException e) {
+        } catch (RemoteException | OperationApplicationException e) {
             Log.d(TAG, "Could not add a new contact: " + e.getMessage());
         }
     }
