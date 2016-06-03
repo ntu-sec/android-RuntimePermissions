@@ -51,7 +51,8 @@ public class LogFragment extends Fragment {
     private LogView mLogView;
     private ScrollView mScrollView;
 
-    public LogFragment() {}
+    public LogFragment() {
+    }
 
     public View inflateViews() {
         mScrollView = new ScrollView(getActivity());
@@ -76,7 +77,7 @@ public class LogFragment extends Fragment {
         mLogView.setCompoundDrawablePadding(paddingPixels);
 
         mLogView.setGravity(Gravity.BOTTOM);
-        mLogView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Holo_Medium);
+        mLogView.setTextAppearance(android.R.style.TextAppearance_Holo_Medium);
 
         mScrollView.addView(mLogView);
         return mScrollView;
@@ -90,10 +91,12 @@ public class LogFragment extends Fragment {
 
         mLogView.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {

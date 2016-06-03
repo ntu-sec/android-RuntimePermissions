@@ -39,6 +39,7 @@ import android.widget.Toast;
  * Implementation is based directly on the documentation at
  * http://developer.android.com/guide/topics/media/camera.html
  */
+@SuppressWarnings("deprecation")
 public class CameraPreviewFragment extends Fragment {
 
     private static final String TAG = "CameraPreview";
