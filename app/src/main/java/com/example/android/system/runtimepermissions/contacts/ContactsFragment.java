@@ -16,9 +16,6 @@
 
 package com.example.android.system.runtimepermissions.contacts;
 
-import com.example.android.common.logger.Log;
-import com.example.android.system.runtimepermissions.R;
-
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.OperationApplicationException;
@@ -31,26 +28,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.android.system.runtimepermissions.R;
+
 import java.util.ArrayList;
 
-/**
- * Displays the first contact stored on the device and contains an option to add a dummy contact.
- * <p/>
- * This Fragment is only used to illustrate that access to the Contacts ContentProvider API has
- * been granted (or denied) as part of the runtime permissions model. It is not relevant for the
- * use
- * of the permissions API.
- * <p/>
- * This fragments demonstrates a basic use case for accessing the Contacts Provider. The
- * implementation is based on the training guide available here:
- * https://developer.android.com/training/contacts-provider/retrieve-names.html
- */
+// https://developer.android.com/training/contacts-provider/retrieve-names.html
+
 public class ContactsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     static int counter = 0;
@@ -58,22 +48,14 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
     private static final String TAG = "Contacts";
     private TextView mMessageText = null;
 
+    @SuppressWarnings("FieldCanBeLocal")
     private static String DUMMY_CONTACT_NAME = "__DUMMY__";
 
-    /**
-     * Projection for the content provider query includes the id and primary name of a contact.
-     */
     private static final String[] PROJECTION = {ContactsContract.Contacts._ID,
             ContactsContract.Contacts.DISPLAY_NAME_PRIMARY};
-    /**
-     * Sort order for the query. Sorted by primary name in ascending order.
-     */
+
     private static final String ORDER = ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " ASC";
 
-
-    /**
-     * Creates a new instance of a ContactsFragment.
-     */
     public static ContactsFragment newInstance() {
         return new ContactsFragment();
     }
@@ -107,26 +89,16 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
         return rootView;
     }
 
-    /**
-     * Restart the Loader to query the Contacts content provider to display the first contact.
-     */
     private void loadContact() {
         getLoaderManager().restartLoader(24, null, this);
     }
 
-    /**
-     * Initialises a new {@link CursorLoader} that queries the {@link ContactsContract}.
-     */
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(getActivity(), ContactsContract.Contacts.CONTENT_URI, PROJECTION,
                 null, null, ORDER);
     }
 
-
-    /**
-     * Dislays either the name of the first contact or a message.
-     */
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 
@@ -140,7 +112,6 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
                         getResources().getString(R.string.contacts_string, totalCount, name));
                 Log.d(TAG, "First contact loaded: " + name);
                 Log.d(TAG, "Total number of contacts: " + totalCount);
-                Log.d(TAG, "Total number of contacts: " + totalCount);
             } else {
                 Log.d(TAG, "List of contacts is empty.");
                 mMessageText.setText(R.string.contacts_empty);
@@ -153,11 +124,6 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
         mMessageText.setText(R.string.contacts_empty);
     }
 
-    /**
-     * Accesses the Contacts content provider directly to insert a new contact.
-     * <p/>
-     * The contact is called "__DUMMY ENTRY" and only contains a name.
-     */
     private void insertDummyContact() {
         // Two operations are needed to insert a new contact.
         ArrayList<ContentProviderOperation> operations = new ArrayList<>(2);

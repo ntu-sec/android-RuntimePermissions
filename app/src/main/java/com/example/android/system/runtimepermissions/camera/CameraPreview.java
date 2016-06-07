@@ -25,14 +25,6 @@ import android.view.SurfaceView;
 
 import java.io.IOException;
 
-/**
- * Camera preview that displays a {@link Camera}.
- *
- * Handles basic lifecycle methods to display and stop the preview.
- * <p>
- * Implementation is based directly on the documentation at
- * http://developer.android.com/guide/topics/media/camera.html
- */
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final String TAG = "CameraPreview";
@@ -41,11 +33,14 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private Camera.CameraInfo mCameraInfo;
     private int mDisplayOrientation;
 
+    public CameraPreview(Context context){
+        super(context);
+    }
+
     public CameraPreview(Context context, Camera camera, Camera.CameraInfo cameraInfo,
             int displayOrientation) {
         super(context);
 
-        // Do not initialise if no camera has been set
         if (camera == null || cameraInfo == null) {
             return;
         }
@@ -53,18 +48,14 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mCameraInfo = cameraInfo;
         mDisplayOrientation = displayOrientation;
 
-        // Install a SurfaceHolder.Callback so we get notified when the
-        // underlying surface is created and destroyed.
         mHolder = getHolder();
         mHolder.addCallback(this);
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
-        // The Surface has been created, now tell the camera where to draw the preview.
         try {
             mCamera.setPreviewDisplay(holder);
             mCamera.startPreview();
-            Log.d(TAG, "Camera preview started.");
         } catch (IOException e) {
             Log.d(TAG, "Error setting camera preview: " + e.getMessage());
         }
@@ -75,21 +66,16 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-        // If your preview can change or rotate, take care of those events here.
-        // Make sure to stop the preview before resizing or reformatting it.
 
         if (mHolder.getSurface() == null) {
-            // preview surface does not exist
             Log.d(TAG, "Preview surface does not exist");
             return;
         }
 
-        // stop preview before making changes
         try {
             mCamera.stopPreview();
             Log.d(TAG, "Preview stopped.");
         } catch (Exception e) {
-            // ignore: tried to stop a non-existent preview
             Log.d(TAG, "Error starting camera preview: " + e.getMessage());
         }
 
@@ -105,12 +91,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
     }
 
-    /**
-     * Calculate the correct orientation for a {@link Camera} preview that is displayed on screen.
-     *
-     * Implementation is based on the sample code provided in
-     * {@link Camera#setDisplayOrientation(int)}.
-     */
     public static int calculatePreviewOrientation(Camera.CameraInfo info, int rotation) {
         int degrees = 0;
 
