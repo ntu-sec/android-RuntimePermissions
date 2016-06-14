@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.example.android.system.runtimepermissions;
+package sg.edu.ntu.testperm;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -31,15 +31,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ViewAnimator;
 
-import com.example.android.system.runtimepermissions.camera.CameraPreviewFragment;
-import com.example.android.system.runtimepermissions.contacts.ContactsFragment;
-
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity
+public class RTPermActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-    public static final String TAG = "MainActivity";
+    public static final String TAG = "RTPermActivity";
 
     private static final int REQUEST_CAMERA = 0;
     private static final int REQUEST_CONTACTS = 1;
@@ -65,13 +62,12 @@ public class MainActivity extends AppCompatActivity
                     Snackbar.LENGTH_INDEFINITE).setAction(R.string.ok, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ActivityCompat.requestPermissions(MainActivity.this,
+                    ActivityCompat.requestPermissions(RTPermActivity.this,
                             new String[]{perm}, requestCode);
                 }
             }).show();
         } else {
-            ActivityCompat.requestPermissions(this, new String[]{perm},
-                    requestCode);
+            ActivityCompat.requestPermissions(this, new String[]{perm}, requestCode);
         }
     }
 
@@ -102,7 +98,7 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onClick(View view) {
                             ActivityCompat
-                                    .requestPermissions(MainActivity.this, new String[]{perm},
+                                    .requestPermissions(RTPermActivity.this, new String[]{perm},
                                             requestCode);
                         }
                     })
@@ -114,14 +110,14 @@ public class MainActivity extends AppCompatActivity
 
     private void showCameraPreview() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.sample_content_fragment, CameraPreviewFragment.newInstance())
+                .replace(R.id.fragment_rtperm_sample, CameraPreviewFragment.newInstance())
                 .addToBackStack("contacts")
                 .commit();
     }
 
     private void showContactDetails() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.sample_content_fragment, ContactsFragment.newInstance())
+                .replace(R.id.fragment_rtperm_sample, ContactsFragment.newInstance())
                 .addToBackStack("contacts")
                 .commit();
     }
@@ -191,13 +187,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mLayout = findViewById(R.id.sample_main_layout);
+        setContentView(R.layout.activity_rtperm);
+        mLayout = findViewById(R.id.layout_rtperm);
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             RTPermFragment fragment = new RTPermFragment();
-            transaction.replace(R.id.sample_content_fragment, fragment);
+            transaction.replace(R.id.fragment_rtperm_sample, fragment);
             transaction.commit();
         }
 

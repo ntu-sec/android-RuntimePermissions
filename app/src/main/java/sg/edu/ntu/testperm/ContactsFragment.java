@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.example.android.system.runtimepermissions.contacts;
+package sg.edu.ntu.testperm;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
@@ -34,8 +34,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.example.android.system.runtimepermissions.R;
 
 import java.util.ArrayList;
 
@@ -65,7 +63,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_rtperm_contacts, container, false);
 
         mMessageText = (TextView) rootView.findViewById(R.id.contact_message);
 

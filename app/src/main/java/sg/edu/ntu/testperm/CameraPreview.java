@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.example.android.system.runtimepermissions.camera;
+package sg.edu.ntu.testperm;
 
 import android.content.Context;
 import android.hardware.Camera;

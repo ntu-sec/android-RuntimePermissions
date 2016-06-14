@@ -1,6 +1,4 @@
-package com.example.android.system.runtimepermissions.camera;
-
-import com.example.android.system.runtimepermissions.R;
+package sg.edu.ntu.testperm;
 
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -34,13 +32,13 @@ public class CameraPreviewFragment extends Fragment {
 
         if (mCamera == null) {
             Toast.makeText(getActivity(), "Camera unavailable.", Toast.LENGTH_SHORT).show();
-            return inflater.inflate(R.layout.fragment_camera_unavailable, null);
+            return inflater.inflate(R.layout.fragment_rtperm_camera_unavailable, null);
         }
 
         cameraInfo = new Camera.CameraInfo();
         Camera.getCameraInfo(CAMERA_ID, cameraInfo);
 
-        View root = inflater.inflate(R.layout.fragment_camera, null);
+        View root = inflater.inflate(R.layout.fragment_rtperm_camera, null);
 
         final int displayRotation = getActivity().getWindowManager().getDefaultDisplay()
                 .getRotation();

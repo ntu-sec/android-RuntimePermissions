@@ -14,7 +14,7 @@
   limitations under the License.
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.system.runtimepermissions">
+    package="sg.edu.ntu.testperm">
 
     <!-- BEGIN_INCLUDE(manifest) -->
 
@@ -35,7 +35,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light">
         <activity
-            android:name=".MainActivity"
+            android:name=".RTPermActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

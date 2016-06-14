@@ -1,4 +1,4 @@
-package com.example.android.system.runtimepermissions;
+package sg.edu.ntu.testperm;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ public class RTPermFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_main, null);
+                             Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_rtperm_main, null);
 
         if (Build.VERSION.SDK_INT < 23) {
             root.findViewById(R.id.button_contacts).setVisibility(View.GONE);
